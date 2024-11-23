@@ -76,9 +76,18 @@ public class UserController {
     public void update(UserDomain userDomain) {
         log.info("Validacion de actualizacion de usuario");
         validateUser(userDomain);
-        isExist(userDomain.getUsername());
+        isExistById(userDomain);
         userDataProvider.update(userDomain);
 
+    }
 
+    private void isExistById(UserDomain userDomain) {
+        UserDomain userDomain1 = userDataProvider.isExistById(userDomain);
+
+        if (Objects.nonNull(userDomain1)) {
+            userDataProvider.update(userDomain);
+        } else {
+            throw new BusinessException("No existe el usuario");
+        }
     }
 }

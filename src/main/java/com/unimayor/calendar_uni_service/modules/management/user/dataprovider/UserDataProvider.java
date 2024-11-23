@@ -23,4 +23,6 @@ public interface UserDataProvider {
     void delete(UserDomain userDomain);
 
     void update(UserDomain user);
+
+    UserDomain isExistById(UserDomain userDomain);
 }

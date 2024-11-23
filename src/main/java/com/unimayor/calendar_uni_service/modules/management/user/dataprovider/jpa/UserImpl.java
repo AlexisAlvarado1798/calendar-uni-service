@@ -1,8 +1,6 @@
 package com.unimayor.calendar_uni_service.modules.management.user.dataprovider.jpa;
 
-import com.unimayor.calendar_uni_service.core.domain.AuthenticationDomain;
 import com.unimayor.calendar_uni_service.core.domain.UserDomain;
-import com.unimayor.calendar_uni_service.core.exeption.BusinessException;
 import com.unimayor.calendar_uni_service.core.persistence.entity.UserEntity;
 import com.unimayor.calendar_uni_service.core.persistence.repository.UserRepository;
 import com.unimayor.calendar_uni_service.modules.management.user.dataprovider.UserDataProvider;
@@ -10,7 +8,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -40,8 +37,7 @@ public class UserImpl implements UserDataProvider {
     @Override
     public void update(UserDomain user) {
         Optional<UserEntity> userEntityOptional
-                = userRepository.findUsername(user.getUsername());
-
+                = userRepository.findById(user.getId());
 
         if (userEntityOptional.isPresent()) {
             UserEntity userEntity = userEntityOptional.get();
@@ -53,6 +49,17 @@ public class UserImpl implements UserDataProvider {
             userRepository.save(userEntity);
         }
 
+    }
+
+    @Override
+    public UserDomain isExistById(UserDomain userDomain) {
+        Optional<UserEntity> userEntity = userRepository.findById(userDomain.getId());
+        return userEntity.map(entity -> UserDomain.builder()
+                .id(entity.getId())
+                .username(entity.getUsername())
+                .password(entity.getPassword())
+                .active(entity.isActive())
+                .build()).orElse(null);
     }
 
     @Override
@@ -74,9 +81,11 @@ public class UserImpl implements UserDataProvider {
 
         for (UserEntity userEntity: userEntities) {
             UserDomain userDomain = UserDomain.builder()
+                    .id(userEntity.getId())
                     .username(userEntity.getUsername())
                     .password(userEntity.getPassword())
                     .active(userEntity.isActive())
+                    .creationDate(userEntity.getCreationDate())
                     .build();
             userDomains.add(userDomain);
         }
