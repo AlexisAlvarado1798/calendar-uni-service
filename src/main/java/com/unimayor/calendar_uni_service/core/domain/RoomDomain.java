@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Data
 public class RoomDomain {
     public String id;
+    public String code;
     public Integer capacity;
     public String description;
     public boolean active;

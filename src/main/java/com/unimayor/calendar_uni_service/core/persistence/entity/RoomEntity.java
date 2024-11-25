@@ -22,7 +22,7 @@ public class RoomEntity {
     @Column(unique = true, nullable = false, length = 100)
     private String id;
 
-    @Column(name = "code", nullable = false, length = 100)
+    @Column(name = "codigo", nullable = false, length = 100)
     private String code;
 
     @Column(name = "capacidad", nullable = false, length = 100)
