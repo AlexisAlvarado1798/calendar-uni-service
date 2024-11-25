@@ -47,7 +47,6 @@ public class UserController {
 
     private void save(UserDomain userDomain) {
         userDataProvider.save(userDomain);
-
     }
 
     public List<UserDomain> findAll() {
@@ -77,8 +76,6 @@ public class UserController {
         log.info("Validacion de actualizacion de usuario");
         validateUser(userDomain);
         isExistById(userDomain);
-        userDataProvider.update(userDomain);
-
     }
 
     private void isExistById(UserDomain userDomain) {

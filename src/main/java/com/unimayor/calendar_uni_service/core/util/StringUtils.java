@@ -19,4 +19,13 @@ public class StringUtils {
             throw new BusinessException(value + "esta vacio o tiene espacios");
         }
     }
+
+    public void isNull(Object object) {
+        if (object == null) {
+            throw new BusinessException("No puede ser nulo");
+        }
+
+    }
+
+
 }
