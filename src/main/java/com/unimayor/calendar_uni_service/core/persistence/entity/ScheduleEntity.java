@@ -27,11 +27,19 @@ public class ScheduleEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "profesores_id", nullable = false)
-    private ProfessorEntity professorEntity;
+    private ProfessorEntity professorId;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuarios_id", nullable = false)
-    private UserEntity userEntity;
+    private UserEntity userId;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "salones_id", nullable = false)
+    private RoomEntity roomId;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "materias_id", nullable = false)
+    private UniversitySubjectEntity universitySubjectId;
 
     @Column(name = "fecha_creacion", nullable = false)
     private LocalDateTime creationDate;

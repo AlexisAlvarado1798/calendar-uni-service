@@ -17,5 +17,7 @@ public class ScheduleDomain {
     private String endDate;
     private String professorId;
     private String userId;
+    private String roomId;
+    private String universitySubjectId;
     private LocalDateTime creationDate;
 }

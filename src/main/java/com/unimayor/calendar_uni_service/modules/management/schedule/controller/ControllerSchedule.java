@@ -2,6 +2,7 @@ package com.unimayor.calendar_uni_service.modules.management.schedule.controller
 
 import com.unimayor.calendar_uni_service.core.domain.ResponseScheduleDomain;
 import com.unimayor.calendar_uni_service.core.domain.ScheduleDomain;
+import com.unimayor.calendar_uni_service.core.domain.UserDomain;
 import com.unimayor.calendar_uni_service.core.exeption.BusinessException;
 import com.unimayor.calendar_uni_service.core.util.StringUtils;
 import com.unimayor.calendar_uni_service.modules.management.schedule.dataprovider.ScheduleDataProvider;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @Log4j2
@@ -42,5 +44,26 @@ public class ControllerSchedule {
 
     public List<ResponseScheduleDomain> findAll() {
         return scheduleDataProvider.findAll();
+    }
+
+    public void delete(String id) {
+        scheduleDataProvider.delete(id);
+    }
+
+    public void update(ScheduleDomain scheduleDomain) {
+        log.info("Validacion de actualizacion de usuario");
+        validateSchedule(scheduleDomain);
+        isExistById(scheduleDomain);
+    }
+
+    private void isExistById(ScheduleDomain scheduleDomain) {
+        ScheduleDomain scheduleDomain1 = scheduleDataProvider.isExistById(scheduleDomain);
+
+        if (Objects.nonNull(scheduleDomain1)) {
+            scheduleDataProvider.update(scheduleDomain1);
+        } else {
+            throw new BusinessException("No existe el usuario");
+        }
+
     }
 }

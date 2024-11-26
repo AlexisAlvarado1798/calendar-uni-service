@@ -15,5 +15,7 @@ public class ResponseScheduleDomain {
     private LocalDateTime endDate;
     private ProfessorDomain professorId;
     private UserDomain userId;
+    private RoomDomain roomId;
+    private UniversitySubjectDomain universitySubjectId;
     private LocalDateTime creationDate;
 }

@@ -4,6 +4,7 @@ import com.unimayor.calendar_uni_service.core.constant.MessageConstant;
 import com.unimayor.calendar_uni_service.core.domain.ProfessorDomain;
 import com.unimayor.calendar_uni_service.core.domain.ResponseScheduleDomain;
 import com.unimayor.calendar_uni_service.core.domain.ScheduleDomain;
+import com.unimayor.calendar_uni_service.core.domain.UserDomain;
 import com.unimayor.calendar_uni_service.core.exeption.BusinessException;
 import com.unimayor.calendar_uni_service.modules.management.schedule.controller.ControllerSchedule;
 import lombok.extern.log4j.Log4j2;
@@ -67,6 +68,46 @@ public class ScheduleWebApi {
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
             log.error("Error no controlado en Schedule: ", e);
+            response.put(MessageConstant.RESPONSE_MESSAGE, "error no controlado" + e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Map<String, Object>> delete(@RequestParam final String id) {
+        log.info("init delete Schedule");
+
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            controllerSchedule.delete(id);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (BusinessException e) {
+            log.error("Error al momento de eliminar el usuario");
+            response.put(MessageConstant.RESPONSE_MESSAGE, e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            log.error("Error no controlado en usuario: ", e);
+            response.put(MessageConstant.RESPONSE_MESSAGE, "error no controlado" + e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping
+    public ResponseEntity<Map<String, Object>> update(@RequestBody final ScheduleDomain scheduleDomain) {
+        log.info("init update Schedule");
+
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            controllerSchedule.update(scheduleDomain);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (BusinessException e) {
+            log.error("Error al momento de crear el usuario");
+            response.put(MessageConstant.RESPONSE_MESSAGE, e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            log.error("Error no controlado en usuario: ", e);
             response.put(MessageConstant.RESPONSE_MESSAGE, "error no controlado" + e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
