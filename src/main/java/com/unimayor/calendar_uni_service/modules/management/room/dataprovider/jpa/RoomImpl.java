@@ -27,6 +27,7 @@ public class RoomImpl implements RoomDataProvider {
         for (RoomEntity roomEntity: roomEntities) {
             RoomDomain roomDomain = RoomDomain.builder()
                     .id(roomEntity.getId())
+                    .code(roomEntity.getCode())
                     .capacity(roomEntity.getCapacity())
                     .description(roomEntity.getDescription())
                     .active(roomEntity.isActive())
